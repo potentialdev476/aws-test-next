@@ -9,6 +9,14 @@ phases:
     commands:
       - echo Building the Next.js app...
       - npm run build
+      - echo Cleaning up to reduce bundle size...
+      - rm -rf node_modules
+      - rm -rf .git
+      - rm -rf .next/cache
+      - find . -name "*.log" -delete
+      - find . -name "*.tmp" -delete
+      - echo Bundle size after cleanup:
+      - du -sh .
   post_build:
     commands:
       - echo Build completed on `date`
@@ -16,4 +24,19 @@ artifacts:
   files:
     - '**/*'
   base-directory: '.'
+  exclude-paths:
+    - 'node_modules/**/*'
+    - '.git/**/*'
+    - '.next/cache/**/*'
+    - '*.log'
+    - '*.tmp'
+    - '.env*'
+    - 'coverage/**/*'
+    - 'tests/**/*'
+    - '*.md'
+    - '.gitignore'
+    - '.eslintrc*'
+    - 'tsconfig.json'
+    - 'next.config.ts'
+    - 'package-lock.json'
 
