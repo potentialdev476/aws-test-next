@@ -46,8 +46,8 @@ export default function RegisterPage() {
     try {
       await register(formData.name, formData.email, formData.password, formData.password_confirmation);
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setIsLoading(false);
     }
