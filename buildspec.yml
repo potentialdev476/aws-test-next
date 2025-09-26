@@ -36,6 +36,4 @@ artifacts:
     - '*.md'
     - '.gitignore'
     - '.eslintrc*'
-    - 'tsconfig.json'
-    - 'next.config.ts'
 
