@@ -15,7 +15,7 @@ phases:
       - rm -rf .next/cache
       - find . -name "*.log" -delete
       - find . -name "*.tmp" -delete
-      - echo Bundle size after cleanup:
+      - echo "Bundle size after cleanup"
       - du -sh .
   post_build:
     commands:
