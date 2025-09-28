@@ -4,10 +4,12 @@ phases:
   pre_build:
     commands:
       - echo Installing dependencies...
+      - cd frontend
       - npm install
   build:
     commands:
       - echo Building the Next.js app...
+      - cd frontend
       - npm run build
       - echo Cleaning up to reduce bundle size...
       - rm -rf node_modules
@@ -23,7 +25,7 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: '.'
+  base-directory: 'frontend'
   exclude-paths:
     - 'node_modules/**/*'
     - '.git/**/*'
