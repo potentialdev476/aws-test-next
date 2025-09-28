@@ -26,9 +26,13 @@ phases:
       - find . -name "appspec.yml" -type f
       - echo "=== DEBUG: Final bundle structure ==="
       - ls -la
+      - echo "=== Ensuring appspec.yml is in root directory ==="
+      - cp appspec.yml ./appspec.yml
+      - ls -la appspec.yml
 artifacts:
   files:
     - '**/*'
+    - 'appspec.yml'
   base-directory: '.'
   exclude-paths:
     - 'node_modules/**/*'
