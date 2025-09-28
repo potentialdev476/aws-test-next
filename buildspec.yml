@@ -19,7 +19,7 @@ phases:
       - du -sh .
   post_build:
     commands:
-      - echo Build completed on `date`
+      - echo "Build completed on $(date)"
       - echo "=== DEBUG: Checking if appspec.yml exists ==="
       - ls -la appspec.yml
       - echo "=== DEBUG: Bundle contents before packaging ==="
