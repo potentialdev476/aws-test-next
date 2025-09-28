@@ -1,6 +1,15 @@
 #!/bin/bash
 echo "Before install - stopping PM2 processes and cleaning directory"
 
+# DEBUG: Check what's in the deployment bundle
+echo "=== DEBUG: Checking deployment bundle contents ==="
+pwd
+ls -la
+echo "=== DEBUG: Looking for appspec.yml ==="
+find . -name "appspec.yml" -type f
+echo "=== DEBUG: Current directory structure ==="
+tree -a || find . -type f | head -20
+
 # CRITICAL: Clean up disk space BEFORE CodeDeploy extracts the bundle
 echo "=== EMERGENCY DISK CLEANUP ==="
 echo "Current disk usage:"

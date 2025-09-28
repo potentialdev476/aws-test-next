@@ -20,6 +20,12 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - echo "=== DEBUG: Checking if appspec.yml exists ==="
+      - ls -la appspec.yml
+      - echo "=== DEBUG: Bundle contents before packaging ==="
+      - find . -name "appspec.yml" -type f
+      - echo "=== DEBUG: Final bundle structure ==="
+      - ls -la
 artifacts:
   files:
     - '**/*'
