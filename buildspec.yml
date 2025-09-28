@@ -36,4 +36,5 @@ artifacts:
     - '*.md'
     - '.gitignore'
     - '.eslintrc*'
+  name: frontend-$(date +%Y-%m-%d-%H-%M-%S)
 
