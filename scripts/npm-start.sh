@@ -1,4 +1,4 @@
 #!/bin/bash
-cd /var/www/html/aws-test-next
-yarn build
+cd /var/www/aws-test-next
+npm run build
 pm2 restart aws-test-next

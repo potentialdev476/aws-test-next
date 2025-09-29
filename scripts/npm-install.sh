@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /var/www/html/aws-test-next
-yarn install
+cd /var/www/aws-test-next
+npm install --production=true

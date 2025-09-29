@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /var/www/html/aws-test-next
+    destination: /var/www/aws-test-next
 hooks:
   AfterInstall:
     - location: scripts/npm-install.sh
