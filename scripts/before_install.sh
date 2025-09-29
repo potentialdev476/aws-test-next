@@ -1,6 +1,21 @@
 #!/bin/bash
 echo "Before install - stopping PM2 processes and cleaning directory"
 
+# CRITICAL FIX: Copy appspec.yml to current directory where CodeDeploy expects it
+echo "=== CRITICAL FIX: Ensuring appspec.yml is where CodeDeploy expects it ==="
+if [ -f "deployment-archive/appspec.yml" ] && [ ! -f "appspec.yml" ]; then
+    echo "Copying appspec.yml from deployment-archive to current directory"
+    cp deployment-archive/appspec.yml .
+    echo "appspec.yml copied successfully"
+    ls -la appspec.yml
+elif [ -f "appspec.yml" ]; then
+    echo "appspec.yml already exists in current directory"
+    ls -la appspec.yml
+else
+    echo "Checking deployment-archive for appspec.yml..."
+    ls -la deployment-archive/ | grep appspec || echo "appspec.yml not found in deployment-archive"
+fi
+
 # DEBUG: Check what's in the deployment bundle
 echo "=== DEBUG: Checking deployment bundle contents ==="
 pwd
@@ -24,6 +39,12 @@ if [ ! -d "deployment-archive" ]; then
         unzip -q /tmp/artifact.zip -d deployment-archive/
         echo "Auto-fix completed: artifacts extracted successfully"
         rm -f /tmp/artifact.zip
+        
+        # CRITICAL: Ensure appspec.yml is in root directory for CodeDeploy
+        if [ -f "deployment-archive/appspec.yml" ] && [ ! -f "appspec.yml" ]; then
+            cp deployment-archive/appspec.yml .
+            echo "Copied appspec.yml to root for CodeDeploy access"
+        fi
     fi
 fi
 
@@ -49,9 +70,10 @@ echo "Cleaning system temporary files"
 rm -rf /tmp/* 2>/dev/null || true
 rm -rf /var/tmp/* 2>/dev/null || true
 
-# Stop and delete PM2 processes
-pm2 stop aws-test-next || true
-pm2 delete aws-test-next || true
+# Stop and delete PM2 processes (these errors are harmless)
+echo "Stopping PM2 processes..."
+pm2 stop aws-test-next 2>/dev/null || echo "PM2 process aws-test-next not found (expected)"
+pm2 delete aws-test-next 2>/dev/null || echo "PM2 process aws-test-next not found (expected)"
 
 # Clean deployment directory to avoid file conflicts
 echo "Cleaning deployment directory"
@@ -63,4 +85,3 @@ echo "=== FINAL DISK SPACE CHECK ==="
 df -h
 echo "Available space in deployment directory:"
 df -h /var/www/aws-test-next
-
