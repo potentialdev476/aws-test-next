@@ -2,17 +2,13 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /var/www/aws-test-next
+    destination: /var/www/html/aws-test-next
 hooks:
-  BeforeInstall:
-    - location: scripts/before_install.sh
-      timeout: 300
-      runas: root
   AfterInstall:
-    - location: scripts/after_install.sh
-      timeout: 300
+    - location: scripts/npm-install.sh
       runas: root
+      timeout: 600
   ApplicationStart:
-    - location: scripts/application_start.sh
-      timeout: 300
+    - location: scripts/npm-start.sh
       runas: root
+      timeout: 1500
