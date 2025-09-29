@@ -10,6 +10,23 @@ find . -name "appspec.yml" -type f
 echo "=== DEBUG: Current directory structure ==="
 tree -a || find . -type f | head -20
 
+# AUTO-FIX: Resolve CodeDeploy appspec.yml timing issue
+echo "=== AUTO-FIX: Resolving appspec.yml timing issue ==="
+if [ ! -d "deployment-archive" ]; then
+    echo "Creating deployment-archive directory..."
+    mkdir -p deployment-archive
+    
+    # Download latest artifact and extract
+    echo "Downloading latest artifact..."
+    LATEST_ARTIFACT=$(aws s3 ls s3://codepipeline-us-east-2-c42590e5c592-4a71-8e71-6a918238eba5/aws-next-pl-arnold/SourceArti/ --region us-east-2 | tail -1 | awk '{print $4}')
+    if [ ! -z "$LATEST_ARTIFACT" ]; then
+        aws s3 cp s3://codepipeline-us-east-2-c42590e5c592-4a71-8e71-6a918238eba5/aws-next-pl-arnold/SourceArti/$LATEST_ARTIFACT /tmp/artifact.zip --region us-east-2
+        unzip -q /tmp/artifact.zip -d deployment-archive/
+        echo "Auto-fix completed: artifacts extracted successfully"
+        rm -f /tmp/artifact.zip
+    fi
+fi
+
 # CRITICAL: Clean up disk space BEFORE CodeDeploy extracts the bundle
 echo "=== EMERGENCY DISK CLEANUP ==="
 echo "Current disk usage:"
