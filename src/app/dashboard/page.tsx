@@ -89,7 +89,7 @@ export default function DashboardPage() {
 
           <div className="mt-6 bg-white overflow-hidden shadow rounded-lg">
             <div className="px-4 py-5 sm:p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h2>
+              <h2 className="text-lg font-medium text-gray-900 mb-4">Quick Actions List</h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
                   Update Profile
