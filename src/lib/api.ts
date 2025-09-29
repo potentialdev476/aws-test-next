@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const API_BASE_URL = 'http://56.228.2.161/api';
+const API_BASE_URL = 'http://ec2-3-144-142-172.us-east-2.compute.amazonaws.com/api';
 
 // Create axios instance
 const apiClient = axios.create({
